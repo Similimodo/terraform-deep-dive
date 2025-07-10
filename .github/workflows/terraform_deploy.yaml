@@ -63,6 +63,7 @@ jobs:
     # This step will run on all pushes and pull requests to show planned changes.
     - name: Terraform Plan
       id: plan
+      if: (success() || failure())
       run: terraform plan -no-color
       # Store the plan output as an environment variable to use in subsequent steps (e.g., PR comments)
       env:
