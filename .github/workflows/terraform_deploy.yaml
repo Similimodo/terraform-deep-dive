@@ -42,3 +42,15 @@ jobs:
       id: validate
       if: (success() || failure())
       run: terraform validate
+
+
+    # --- AWS Authentication ---
+    # This step configures AWS credentials using OIDC.
+    # Replace <YOUR_AWS_ACCOUNT_ID> and GitHubActions-Terraform-Deployer with your actual values.
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        # The ARN of the IAM Role you created for GitHub Actions in AWS
+        # This role should have permissions to deploy your AWS resources (EC2, S3, DynamoDB, etc.)
+        role-to-assume: arn:aws:iam::508140293808:role/GHA-Terraform-Infra
+        aws-region: us-east-1 # Or whatever AWS region your infrastructure is in
