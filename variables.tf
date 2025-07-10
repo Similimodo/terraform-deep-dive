@@ -34,3 +34,9 @@ variable "environment" {
   description = "(Optional) Environment of all resources"
   default     = "development"
 }
+
+variable "billing" {
+  type        = string
+  description = "(Required) Environment of all resources"
+  default     = "development"
+}
