@@ -57,3 +57,16 @@ jobs:
         # This role should have permissions to deploy your AWS resources (EC2, S3, DynamoDB, etc.)
         role-to-assume: arn:aws:iam::508140293808:role/GHA-Terraform-Infra
         aws-region: us-east-1 # Or whatever AWS region your infrastructure is in
+
+
+    # Generate and show a Terraform execution plan
+    # This step will run on all pushes and pull requests to show planned changes.
+    - name: Terraform Plan
+      id: plan
+      run: terraform plan -no-color
+      # Store the plan output as an environment variable to use in subsequent steps (e.g., PR comments)
+      env:
+        # GITHUB_TOKEN here is the default token provided by GitHub Actions for API interaction
+        # It's not the same as your personal access token (PAT)
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Ensure this is present if using github-script action
+      continue-on-error: true # Allow subsequent steps to run even if plan has errors
