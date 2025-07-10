@@ -7,3 +7,6 @@
 
 # Terraform plan files
 *.tfplan
+
+# Ignore the backend
+backend_local.tf
