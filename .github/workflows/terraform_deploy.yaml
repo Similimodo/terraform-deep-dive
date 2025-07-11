@@ -31,7 +31,6 @@ jobs:
 
     # --- AWS Authentication ---
     # This step configures AWS credentials using OIDC.
-    # Replace <YOUR_AWS_ACCOUNT_ID> and GitHubActions-Terraform-Deployer with your actual values.
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
@@ -39,8 +38,6 @@ jobs:
         # This role should have permissions to deploy your AWS resources (EC2, S3, DynamoDB, etc.)
         role-to-assume: arn:aws:iam::508140293808:role/GHA-Terraform-Infra
         aws-region: us-east-1 # Or whatever AWS region your infrastructure is in
-
-
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
@@ -70,21 +67,6 @@ jobs:
         # It's not the same as your personal access token (PAT)
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Ensure this is present if using github-script action
       continue-on-error: true # Allow subsequent steps to run even if plan has errors
-
-    # Step 7: Generate and show a Terraform execution plan
-    # This step runs for all pushes and pull requests to show planned changes.
-    # 'continue-on-error: true' allows subsequent steps (like PR comments) to run
-    # even if the plan itself has errors.
-    - name: Terraform Plan
-      id: plan
-      run: terraform plan -no-color # -no-color for cleaner output in logs/PR comments
-      env:
-        # Pass the GitHub-provided token if your Terraform plan needs to interact with GitHub APIs
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        # Example of passing other Terraform variables via env (TF_VAR_ prefix)
-        # TF_VAR_gh_pat: ${{ secrets.GH_PAT }} # If your Terraform needs a GitHub PAT
-        # TF_VAR_organization: Similimodo # If your Terraform needs the organization name
-      continue-on-error: true
 
 
     # Step 9: Apply the Terraform configuration
