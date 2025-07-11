@@ -76,7 +76,3 @@ jobs:
       id: apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push' # Only on push to main
       run: terraform apply -auto-approve -no-color # -auto-approve for non-interactive apply
-      # env:
-        # Example of passing other Terraform variables via env (TF_VAR_ prefix)
-        # TF_VAR_gh_pat: ${{ secrets.GH_PAT }} # If your Terraform needs a GitHub PAT
-        # TF_VAR_organization: Similimodo # If your Terraform needs the organization name
